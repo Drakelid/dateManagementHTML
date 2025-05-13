@@ -2,7 +2,7 @@
 
 namespace dateManagementHTML.Models.Entities
 {
-    public class Holiday
+    public class Appointment
     {
         public int Id { get; set; }
 
@@ -10,9 +10,9 @@ namespace dateManagementHTML.Models.Entities
         public string Name { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Required]
-        public string CountryCode { get; set; } // e.g. "NO", "DE"
+        public DateTime EndDate { get; set; }
     }
 }
