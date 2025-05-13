@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminders - Date Management App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="images/logo.png" alt="App Logo" class="app-logo">
+            </div>
+            <a href="index.html" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="calendar.html" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Calendar</span>
+            </a>
+            <a href="reminders.html" class="nav-item active">
+                <i class="fa-solid fa-bell"></i>
+                <span>Reminders</span>
+            </a>
+            <a href="events.html" class="nav-item">
+                <i class="fa-solid fa-flag"></i>
+                <span>Events</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+            <a href="login.html" class="nav-item">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Login</span>
+            </a>
+        </div>
+        <div class="main-content">
+            <div class="header-section">
+                <div class="header-image-text">
+                    <div class="illustration">
+                        <img src="images/reminders.png" alt="Reminders Illustration" class="dashboard-illustration">
+                    </div>
+                    <div class="header-text">
+                        <h1>Reminders</h1>
+                        <button class="create-reminder-btn">Create a Reminder</button>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="refresh-btn">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
+                    <button class="notification-btn">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="reminders-container content-card">
+                <div class="reminders-header">
+                    <h2>All Reminders</h2>
+                </div>
+
+                <div class="reminder-filters">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Today</button>
+                    <button class="filter-btn">Upcoming</button>
+                    <button class="filter-btn">Completed</button>
+                </div>
+
+                <div class="reminders-list">
+                    <div class="reminder-item">
+                        <div class="reminder-checkbox">
+                            <input type="checkbox" id="reminder1">
+                            <label for="reminder1"></label>
+                        </div>
+                        <div class="reminder-content">
+                            <h3>Prepare slides for presentation</h3>
+                            <div class="reminder-meta">
+                                <span class="reminder-date">Today</span>
+                                <span class="reminder-time">9:00 AM</span>
+                                <span class="reminder-tag work">Work</span>
+                            </div>
+                        </div>
+                        <div class="reminder-actions">
+                            <button class="reminder-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="reminder-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="reminder-item">
+                        <div class="reminder-checkbox">
+                            <input type="checkbox" id="reminder2">
+                            <label for="reminder2"></label>
+                        </div>
+                        <div class="reminder-content">
+                            <h3>Pick up prescription</h3>
+                            <div class="reminder-meta">
+                                <span class="reminder-date">Tomorrow</span>
+                                <span class="reminder-time">2:30 PM</span>
+                                <span class="reminder-tag health">Health</span>
+                            </div>
+                        </div>
+                        <div class="reminder-actions">
+                            <button class="reminder-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="reminder-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="reminder-item">
+                        <div class="reminder-checkbox">
+                            <input type="checkbox" id="reminder3">
+                            <label for="reminder3"></label>
+                        </div>
+                        <div class="reminder-content">
+                            <h3>Buy groceries for dinner party</h3>
+                            <div class="reminder-meta">
+                                <span class="reminder-date">Friday</span>
+                                <span class="reminder-time">5:00 PM</span>
+                                <span class="reminder-tag social">Social</span>
+                            </div>
+                        </div>
+                        <div class="reminder-actions">
+                            <button class="reminder-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="reminder-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="reminder-item completed">
+                        <div class="reminder-checkbox">
+                            <input type="checkbox" id="reminder4" checked>
+                            <label for="reminder4"></label>
+                        </div>
+                        <div class="reminder-content">
+                            <h3>Schedule team meeting</h3>
+                            <div class="reminder-meta">
+                                <span class="reminder-date">Yesterday</span>
+                                <span class="reminder-time">11:00 AM</span>
+                                <span class="reminder-tag work">Work</span>
+                            </div>
+                        </div>
+                        <div class="reminder-actions">
+                            <button class="reminder-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="reminder-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

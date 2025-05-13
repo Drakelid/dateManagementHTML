@@ -1,0 +1,42 @@
+<svg width="250" height="250" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background elements - calendar -->
+    <rect x="70" y="40" width="160" height="170" rx="10" fill="#e6f2ff" />
+    <rect x="85" y="70" width="130" height="125" rx="5" fill="#ffffff" />
+    
+    <!-- Calendar grid lines -->
+    <line x1="85" y1="95" x2="215" y2="95" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="85" y1="120" x2="215" y2="120" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="85" y1="145" x2="215" y2="145" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="85" y1="170" x2="215" y2="170" stroke="#d0e6ff" stroke-width="1" />
+    
+    <line x1="103" y1="70" x2="103" y2="195" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="121" y1="70" x2="121" y2="195" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="139" y1="70" x2="139" y2="195" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="157" y1="70" x2="157" y2="195" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="175" y1="70" x2="175" y2="195" stroke="#d0e6ff" stroke-width="1" />
+    <line x1="193" y1="70" x2="193" y2="195" stroke="#d0e6ff" stroke-width="1" />
+    
+    <!-- Calendar event dot -->
+    <circle cx="112" cy="132" r="4" fill="#5695cd" />
+    <circle cx="166" cy="107" r="4" fill="#ff8a95" />
+    <circle cx="184" cy="157" r="4" fill="#5cbea7" />
+    
+    <!-- Person illustration -->
+    <!-- Head -->
+    <circle cx="50" cy="90" r="25" fill="#ffb6c1" />
+    
+    <!-- Face -->
+    <ellipse cx="42" cy="85" rx="3" ry="4" fill="#333" />
+    <ellipse cx="58" cy="85" rx="3" ry="4" fill="#333" />
+    <path d="M43 100 Q50 105, 57 100" stroke="#333" stroke-width="2" fill="none" />
+    
+    <!-- Hair -->
+    <path d="M30 65 Q40 45, 60 55 Q75 65, 70 95 Q65 105, 50 110 Q35 105, 30 95 Q25 85, 30 65" fill="#333" />
+    
+    <!-- Body -->
+    <path d="M35 115 Q45 110, 65 115 L70 170 Q60 175, 40 175 L35 115" fill="#ff7f7f" />
+    
+    <!-- Arm waving -->
+    <path d="M65 120 Q85 100, 100 80 Q105 75, 110 80 Q115 85, 110 90 Q95 110, 75 130" fill="#ff7f7f" />
+    <circle cx="107" cy="83" r="5" fill="#ffb6c1" />
+</svg>

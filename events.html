@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Date Management App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="images/logo.png" alt="App Logo" class="app-logo">
+            </div>
+            <a href="index.html" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="calendar.html" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Calendar</span>
+            </a>
+            <a href="reminders.html" class="nav-item">
+                <i class="fa-solid fa-bell"></i>
+                <span>Reminders</span>
+            </a>
+            <a href="events.html" class="nav-item active">
+                <i class="fa-solid fa-flag"></i>
+                <span>Events</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+            <a href="login.html" class="nav-item">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Login</span>
+            </a>
+        </div>
+        <div class="main-content">
+            <div class="header-section">
+                <div class="header-image-text">
+                    <div class="illustration">
+                        <img src="images/events.png" alt="Events Illustration" class="dashboard-illustration">
+                    </div>
+                    <div class="header-text">
+                        <h1>Events</h1>
+                        <button class="create-event-btn">Create an Event</button>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="refresh-btn">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
+                    <button class="notification-btn">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="events-container content-card">
+                <div class="events-header">
+                    <h2>All Events</h2>
+                </div>
+
+                <div class="event-filters">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Today</button>
+                    <button class="filter-btn">Upcoming</button>
+                    <button class="filter-btn">Past</button>
+                </div>
+
+                <div class="event-categories">
+                    <button class="category-btn all active">All</button>
+                    <button class="category-btn work">Work</button>
+                    <button class="category-btn health">Health</button>
+                    <button class="category-btn social">Social</button>
+                </div>
+
+                <div class="events-list">
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="day">30</span>
+                            <span class="month">Apr</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>Team Meeting</h3>
+                            <div class="event-meta">
+                                <span class="event-time"><i class="fa-regular fa-clock"></i> 10:00 AM</span>
+                                <span class="event-location"><i class="fa-solid fa-location-dot"></i> Conference Room A</span>
+                                <span class="event-tag work">Work</span>
+                            </div>
+                            <p class="event-description">Weekly team meeting to discuss project progress and upcoming tasks.</p>
+                        </div>
+                        <div class="event-actions">
+                            <button class="event-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="event-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="day">30</span>
+                            <span class="month">Apr</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>Doctor's Appointment</h3>
+                            <div class="event-meta">
+                                <span class="event-time"><i class="fa-regular fa-clock"></i> 1:00 PM</span>
+                                <span class="event-location"><i class="fa-solid fa-location-dot"></i> City Medical Center</span>
+                                <span class="event-tag health">Health</span>
+                            </div>
+                            <p class="event-description">Annual check-up with Dr. Smith.</p>
+                        </div>
+                        <div class="event-actions">
+                            <button class="event-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="event-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="day">30</span>
+                            <span class="month">Apr</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>Dinner with Friends</h3>
+                            <div class="event-meta">
+                                <span class="event-time"><i class="fa-regular fa-clock"></i> 7:00 PM</span>
+                                <span class="event-location"><i class="fa-solid fa-location-dot"></i> Seaside Restaurant</span>
+                                <span class="event-tag social">Social</span>
+                            </div>
+                            <p class="event-description">Monthly get-together with college friends.</p>
+                        </div>
+                        <div class="event-actions">
+                            <button class="event-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="event-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="day">1</span>
+                            <span class="month">May</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>Conference</h3>
+                            <div class="event-meta">
+                                <span class="event-time"><i class="fa-regular fa-clock"></i> All Day</span>
+                                <span class="event-location"><i class="fa-solid fa-location-dot"></i> Convention Center</span>
+                                <span class="event-tag work">Work</span>
+                            </div>
+                            <p class="event-description">Annual industry conference with keynote speakers and networking events.</p>
+                        </div>
+                        <div class="event-actions">
+                            <button class="event-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="event-delete-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
