@@ -1,0 +1,98 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<dateManagementHTML.Models.Entities.Event>
+
+@{
+    var currentFilter = Context.Request.Query["filter"].ToString().ToLower();
+    var currentTag = Context.Request.Query["tag"].ToString().ToLower();
+}
+
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="app-container">
+    <div class="main-content">
+        <div class="header-section">
+            <div class="header-image-text">
+                <div class="illustration">
+                    <img src="images/events.png" alt="Events Illustration" class="dashboard-illustration">
+                </div>
+                <div class="header-text">
+                    <h1>Events</h1>
+                    <a asp-controller="Events" asp-action="Create" class="create-event-btn">Create an Event</a>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="refresh-btn">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+                <button class="notification-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="events-container content-card">
+            <div class="events-header">
+                <h2>All Events</h2>
+            </div>
+
+            <div class="event-filters">
+                <a asp-action="Index" asp-route-filter="all" asp-route-tag="@currentTag" class="filter-btn @(currentFilter == "all" ? "active" : "")">All</a>
+                <a asp-action="Index" asp-route-filter="today" asp-route-tag="@currentTag" class="filter-btn @(currentFilter == "today" ? "active" : "")">Today</a>
+                <a asp-action="Index" asp-route-filter="upcoming" asp-route-tag="@currentTag" class="filter-btn @(currentFilter == "upcoming" ? "active" : "")">Upcoming</a>
+                <a asp-action="Index" asp-route-filter="past" asp-route-tag="@currentTag" class="filter-btn @(currentFilter == "past" ? "active" : "")">Past</a>
+            </div>
+
+
+
+            <div class="event-categories">
+                <a asp-action="Index" asp-route-tag="all" asp-route-filter="@currentFilter" class="category-btn all @(currentTag == "all" ? "active" : "")">All</a>
+                <a asp-action="Index" asp-route-tag="work" asp-route-filter="@currentFilter" class="category-btn work @(currentTag == "work" ? "active" : "")">Work</a>
+                <a asp-action="Index" asp-route-tag="health" asp-route-filter="@currentFilter" class="category-btn health @(currentTag == "health" ? "active" : "")">Health</a>
+                <a asp-action="Index" asp-route-tag="social" asp-route-filter="@currentFilter" class="category-btn social @(currentTag == "social" ? "active" : "")">Social</a>
+            </div>
+
+
+
+
+            <div class="events-list">
+                @foreach (var evt in Model)
+                {
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="day">@evt.StartDateTime.Day</span>
+                            <span class="month">@evt.StartDateTime.ToString("MMM")</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>@evt.EventName</h3>
+                            <div class="event-meta">
+                                <span class="event-time">
+                                    <i class="fa-regular fa-clock"></i>
+                                    @(evt.IsAllDay ? "All Day" : evt.StartDateTime.ToString("t"))
+                                </span>
+                                @if (!string.IsNullOrWhiteSpace(evt.Location))
+                                {
+                                    <span class="event-location">
+                                        <i class="fa-solid fa-location-dot"></i> @evt.Location
+                                    </span>
+                                }
+                                <span class="event-tag @evt.Tag.ToLower()">@evt.Tag</span>
+                            </div>
+                            <p class="event-description">@evt.Description</p>
+                        </div>
+                        <div class="event-actions">
+                            <!-- future edit/delete buttons -->
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

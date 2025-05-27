@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using dateManagementHTML.Models.Entities;
+﻿using dateManagementHTML.Models.Entities;
 using dateManagementHTML.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace dateManagementHTML.Controllers
 {
@@ -18,6 +19,7 @@ namespace dateManagementHTML.Controllers
 
         // GET: /Account/Register
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -25,6 +27,7 @@ namespace dateManagementHTML.Controllers
 
         // POST: /Account/Register
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -34,7 +37,10 @@ namespace dateManagementHTML.Controllers
             var user = new ApplicationUser
             {
                 UserName = model.Email,
-                Email = model.Email
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Role = "User",
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -42,7 +48,7 @@ namespace dateManagementHTML.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             foreach (var error in result.Errors)
@@ -53,6 +59,7 @@ namespace dateManagementHTML.Controllers
 
         // GET: /Account/Login
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -60,6 +67,7 @@ namespace dateManagementHTML.Controllers
 
         // POST: /Account/Login
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -74,7 +82,7 @@ namespace dateManagementHTML.Controllers
             );
 
             if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
 
             ModelState.AddModelError("", "Invalid login attempt.");
             return View(model);
@@ -86,7 +94,7 @@ namespace dateManagementHTML.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 }

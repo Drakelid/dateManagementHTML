@@ -104,6 +104,9 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+# Folders built by Add-Migration
+Migrations/
+
 # Chutzpah Test files
 _Chutzpah*
 

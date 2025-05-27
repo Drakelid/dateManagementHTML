@@ -1,0 +1,257 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="app-container">
+    <div class="main-content">
+        <div class="header-section">
+            <div class="header-image-text">
+                <div class="illustration">
+                    <img src="images/settings.png" alt="Settings Illustration" class="dashboard-illustration">
+                </div>
+                <div class="header-text">
+                    <h1>Settings</h1>
+                    <button class="save-settings-btn">Save All Changes</button>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="refresh-btn">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+                <button class="notification-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="settings-container">
+            <div class="settings-sidebar content-card">
+                <div class="settings-nav-item active" data-tab="account">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Account</span>
+                </div>
+                <div class="settings-nav-item" data-tab="appearance">
+                    <i class="fa-solid fa-palette"></i>
+                    <span>Appearance</span>
+                </div>
+                <div class="settings-nav-item" data-tab="notifications">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+                <div class="settings-nav-item" data-tab="calendar">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Calendar</span>
+                </div>
+                <div class="settings-nav-item" data-tab="privacy">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>Privacy</span>
+                </div>
+            </div>
+
+            <div class="settings-content content-card">
+                <div class="settings-tab active" id="account">
+                    <h2>Account Settings</h2>
+
+                    <div class="settings-card content-card">
+                        <h3>Profile Information</h3>
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" value="Jane Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" value="jane.doe@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone">Timezone</label>
+                            <select id="timezone">
+                                <option value="utc-8">Pacific Time (UTC-8)</option>
+                                <option value="utc-5">Eastern Time (UTC-5)</option>
+                                <option value="utc+0">GMT (UTC+0)</option>
+                                <option value="utc+1" selected>Central European Time (UTC+1)</option>
+                                <option value="utc+8">China Standard Time (UTC+8)</option>
+                            </select>
+                        </div>
+                        <button class="save-btn">Save Changes</button>
+                    </div>
+
+                    <div class="settings-card content-card">
+                        <h3>Password</h3>
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword">
+                        </div>
+                        <button class="save-btn">Update Password</button>
+                    </div>
+
+                    <div class="settings-card content-card danger-zone">
+                        <h3>Delete Account</h3>
+                        <p>Once you delete your account, there is no going back. Please be certain.</p>
+                        <button class="delete-btn">Delete Account</button>
+                    </div>
+                </div>
+
+                <div class="settings-tab" id="appearance">
+                    <h2>Appearance Settings</h2>
+
+                    <div class="settings-card content-card">
+                        <h3>Theme</h3>
+                        <div class="theme-options">
+                            <div class="theme-option active">
+                                <div class="theme-preview light"></div>
+                                <span>Light</span>
+                            </div>
+                            <div class="theme-option">
+                                <div class="theme-preview dark"></div>
+                                <span>Dark</span>
+                            </div>
+                            <div class="theme-option">
+                                <div class="theme-preview system"></div>
+                                <span>System</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card content-card">
+                        <h3>Color Accent</h3>
+                        <div class="color-options">
+                            <div class="color-option blue active"></div>
+                            <div class="color-option purple"></div>
+                            <div class="color-option green"></div>
+                            <div class="color-option orange"></div>
+                            <div class="color-option pink"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-tab" id="notifications">
+                    <h2>Notification Settings</h2>
+
+                    <div class="settings-card content-card">
+                        <h3>Email Notifications</h3>
+                        <div class="toggle-group">
+                            <label for="emailReminders">Event Reminders</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="emailReminders" checked>
+                                <label for="emailReminders"></label>
+                            </div>
+                        </div>
+                        <div class="toggle-group">
+                            <label for="emailSummary">Daily Summary</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="emailSummary" checked>
+                                <label for="emailSummary"></label>
+                            </div>
+                        </div>
+                        <div class="toggle-group">
+                            <label for="emailUpdates">Updates and News</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="emailUpdates">
+                                <label for="emailUpdates"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card content-card">
+                        <h3>Push Notifications</h3>
+                        <div class="toggle-group">
+                            <label for="pushReminders">Event Reminders</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="pushReminders" checked>
+                                <label for="pushReminders"></label>
+                            </div>
+                        </div>
+                        <div class="toggle-group">
+                            <label for="pushUpdates">Updates and News</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="pushUpdates">
+                                <label for="pushUpdates"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-tab" id="calendar">
+                    <h2>Calendar Settings</h2>
+
+                    <div class="settings-card content-card">
+                        <h3>Display Options</h3>
+                        <div class="toggle-group">
+                            <label for="showWeekends">Show Weekends</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="showWeekends" checked>
+                                <label for="showWeekends"></label>
+                            </div>
+                        </div>
+                        <div class="toggle-group">
+                            <label for="showWeekNumbers">Show Week Numbers</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="showWeekNumbers">
+                                <label for="showWeekNumbers"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstDayOfWeek">First Day of Week</label>
+                            <select id="firstDayOfWeek">
+                                <option value="sunday">Sunday</option>
+                                <option value="monday" selected>Monday</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="settings-card content-card">
+                        <h3>Default Reminder Times</h3>
+                        <div class="form-group">
+                            <label for="defaultEventReminder">Default Event Reminder</label>
+                            <select id="defaultEventReminder">
+                                <option value="0">At time of event</option>
+                                <option value="5">5 minutes before</option>
+                                <option value="10">10 minutes before</option>
+                                <option value="15" selected>15 minutes before</option>
+                                <option value="30">30 minutes before</option>
+                                <option value="60">1 hour before</option>
+                                <option value="1440">1 day before</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-tab" id="privacy">
+                    <h2>Privacy Settings</h2>
+
+                    <div class="settings-card content-card">
+                        <h3>Data Usage</h3>
+                        <div class="toggle-group">
+                            <label for="collectAnalytics">Collect Usage Data</label>
+                            <div class="toggle">
+                                <input type="checkbox" id="collectAnalytics" checked>
+                                <label for="collectAnalytics"></label>
+                            </div>
+                            <p class="help-text">Help us improve by allowing us to collect anonymous usage data.</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-card content-card">
+                        <h3>Data Export</h3>
+                        <p>Export all your data in a common format for backup or migration purposes.</p>
+                        <button class="export-btn">Export Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-
 using dateManagementHTML.Data;
 using dateManagementHTML.Models.Entities;
 using dateManagementHTML.Services.Security;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 
 public class Program
@@ -11,6 +12,14 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddControllersWithViews(options =>
+        {
+            var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+            options.Filters.Add(new AuthorizeFilter(policy));
+        });
 
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
@@ -34,7 +43,7 @@ public class Program
 
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/Dashboard/Error");
             app.UseHsts();
         }
 
@@ -48,7 +57,7 @@ public class Program
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
         app.MapRazorPages();
 

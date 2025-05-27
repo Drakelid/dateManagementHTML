@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using dateManagementHTML.Models;
 using dateManagementHTML.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace dateManagementHTML.Data
 {
@@ -13,5 +14,7 @@ namespace dateManagementHTML.Data
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Event> Events { get; set; }
+
     }
 }

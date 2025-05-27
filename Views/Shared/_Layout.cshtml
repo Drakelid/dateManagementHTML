@@ -7,55 +7,57 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DateManagement.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DateManagement</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+        <nav class="sidebar">
+            <div class="nav-links-upper">
+                <div class="logo">
+                    <img src="~/images/logo.png" alt="App Logo" class="app-logo">
                 </div>
+                <a asp-controller="Dashboard" asp-action="index" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a asp-controller="Calendar" asp-action="index" class="nav-item">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Calendar</span>
+                </a>
+                <a asp-controller="Reminders" asp-action="index" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Reminders</span>
+                </a>
+                <a asp-controller="Events" asp-action="index" class="nav-item">
+                    <i class="fa-solid fa-flag"></i>
+                    <span>Events</span>
+                </a>
+                <a asp-controller="Settings" asp-action="index" class="nav-item active">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
             </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        @User.Identity.Name
+            <div class="nav-links-bottom">
+                <form asp-controller="Account" asp-action="Logout" method="post" class="nav-item">
+                    <button type="submit" class="nav-item" style="all: unset; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Logout</span>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <form asp-controller="Account" asp-action="Logout" method="post" class="dropdown-item">
-                                <button type="submit" class="btn btn-link">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            }
+
+                </form>
+            </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - DateManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+            <footer class="border-top footer text-muted">
+                <div class="container">
+                    &copy; 2025 - DateManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </footer>
         </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

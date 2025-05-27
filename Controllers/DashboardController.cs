@@ -5,22 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace dateManagementHTML.Controllers;
 
-public class HomeController : Controller
+public class DashboardController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    [Authorize(Roles = "Admin")]
-    public IActionResult Privacy()
     {
         return View();
     }
