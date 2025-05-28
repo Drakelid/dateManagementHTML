@@ -68,10 +68,13 @@
                     <h2>Account Settings</h2>
 
                     <div class="settings-card content-card">
-                        <form asp-controller="Settings" asp-action="SaveCountry" method="post">
-                            <select id="countryDropdown" name="countryCode" class="form-control"></select>
-                            <button type="submit" class="save-btn mt-2">Save Country</button>
-                        </form>
+                        <h3>Country Selection</h3>
+                        <div class="form-group">
+                            <form asp-controller="Settings" asp-action="SaveCountry" method="post">
+                                <select id="countryDropdown" name="countryCode" class="form-control"></select>
+                            </form>
+                        </div>
+                        <button type="submit" class="save-btn mt-2">Save Country</button>
                     </div>
 
                     <div class="settings-card content-card">
@@ -86,7 +89,7 @@
                         </div>
                         <div class="form-group">
                             <label for="timezone">Timezone</label>
-                            <select id="timezone">
+                            <select id="timezone" class="form-control">
                                 <option value="utc-8">Pacific Time (UTC-8)</option>
                                 <option value="utc-5">Eastern Time (UTC-5)</option>
                                 <option value="utc+0">GMT (UTC+0)</option>
@@ -275,7 +278,7 @@
 @section Scripts {
     <script>
         const savedCountryCode = '@ViewBag.SavedCountry';
-        fetch('/Country/List')
+        fetch('/Admin/List') // updated from '/Country/List'
             .then(res => res.json())
             .then(data => {
                 const dropdown = document.getElementById('countryDropdown');

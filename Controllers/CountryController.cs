@@ -20,26 +20,5 @@ namespace dateManagementHTML.Controllers
         {
             return View();
         }
-
-        // GET: /Country/Sync
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Sync()
-        {
-            await _countrySeeder.SeedCountriesAsync();
-            TempData["Message"] = "Country list successfully updated from Nager.Date.";
-            return RedirectToAction("Index", "Admin");
-        }
-
-        // GET: /Country/List (used by dropdown)
-        [HttpGet]
-        public IActionResult List()
-        {
-            var countries = _context.Countries
-                .OrderBy(c => c.Name)
-                .Select(c => new { c.CountryCode, c.Name })
-                .ToList();
-
-            return Json(countries);
-        }
     }
 }

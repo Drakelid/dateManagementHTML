@@ -392,6 +392,11 @@ body {
         font-weight: 600;
     }
 
+    .calendar-day.holiday {
+        color: #ff8a95;
+        font-weight: 700;
+    }
+
 .calendar-events {
     margin-top: 30px;
 }
@@ -410,6 +415,42 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
+/* Highlight holidays in red */
+.calendar-day.holiday {
+    color: #ff4d4f;
+    font-weight: bold;
+}
+
+/* Highlight weekends in red */
+.calendar-day.weekend-day {
+    color: #d9534f;
+}
+
+/* Highlight today's date */
+.calendar-day.today {
+    background-color: transparent;
+    color: inherit;
+    font-weight: normal;
+}
+
+/* Selected day styling */
+.calendar-day.selected-day {
+    background-color: #e0f2ff;
+    outline: 2px solid #007bff;
+    outline-offset: -2px;
+    font-weight: bold;
+}
+
+/* Today, when it's NOT selected */
+.calendar-day.today-outline {
+    border: 2px dashed #007bff;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+
+
 
 /* Reminders Page Styles */
 .reminders-container {

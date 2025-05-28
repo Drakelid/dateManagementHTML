@@ -4,10 +4,13 @@
 @{
 }
 
-<form asp-controller="Country" asp-action="Sync" method="get">
-    <button type="submit" class="btn btn-primary">Update Country List</button>
+<form asp-controller="Admin" asp-action="Sync" method="get">
+    <button type="submit" class="btn btn-outline">Sync Country List</button>
 </form>
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success">@TempData["Message"]</div>
+
 }
+
+<form asp-controller="Admin" asp-action="SyncHolidays" method="post">
+    <input type="hidden" name="year" value="@DateTime.Now.Year" />
+    <button type="submit" class="btn btn-outline">Sync Holidays</button>
+</form>

@@ -17,7 +17,7 @@
                 </div>
                 <div class="header-text">
                     <h1>Calendar</h1>
-                    <button class="create-event-btn">Create an Event</button>
+                    <a asp-controller="Events" asp-action="Create" class="create-event-btn">Create an Event</a>
                 </div>
             </div>
             <div class="header-actions">
@@ -51,67 +51,248 @@
                 <div class="weekday">Sat</div>
             </div>
 
-            <div class="calendar-grid">
-                <!-- Previous month days -->
-                <div class="calendar-day inactive">30</div>
-                <div class="calendar-day inactive">31</div>
-
-                <!-- Current month days -->
-                <div class="calendar-day">1</div>
-                <div class="calendar-day">2</div>
-                <div class="calendar-day">3</div>
-                <div class="calendar-day">4</div>
-                <div class="calendar-day">5</div>
-                <div class="calendar-day">6</div>
-                <div class="calendar-day">7</div>
-                <div class="calendar-day">8</div>
-                <div class="calendar-day">9</div>
-                <div class="calendar-day">10</div>
-                <div class="calendar-day">11</div>
-                <div class="calendar-day">12</div>
-                <div class="calendar-day">13</div>
-                <div class="calendar-day">14</div>
-                <div class="calendar-day">15</div>
-                <div class="calendar-day">16</div>
-                <div class="calendar-day">17</div>
-                <div class="calendar-day">18</div>
-                <div class="calendar-day">19</div>
-                <div class="calendar-day">20</div>
-                <div class="calendar-day">21</div>
-                <div class="calendar-day">22</div>
-                <div class="calendar-day">23</div>
-                <div class="calendar-day">24</div>
-                <div class="calendar-day">25</div>
-                <div class="calendar-day">26</div>
-                <div class="calendar-day">27</div>
-                <div class="calendar-day">28</div>
-                <div class="calendar-day">29</div>
-                <div class="calendar-day current-day">30</div>
-
-                <!-- Next month days -->
-                <div class="calendar-day inactive">1</div>
-                <div class="calendar-day inactive">2</div>
-                <div class="calendar-day inactive">3</div>
+            <div id="calendarGrid" class="calendar-grid grid grid-cols-7 gap-1">
+                <!-- JS will populate this -->
             </div>
 
             <div class="calendar-events content-card">
-                <h3>Events for April 30</h3>
-                <div class="calendar-event">
-                    <div class="event-time">10:00 AM</div>
-                    <div class="event-title">Team Meeting</div>
-                    <div class="event-tag work">Work</div>
-                </div>
-                <div class="calendar-event">
-                    <div class="event-time">1:00 PM</div>
-                    <div class="event-title">Doctor's Appointment</div>
-                    <div class="event-tag health">Health</div>
-                </div>
-                <div class="calendar-event">
-                    <div class="event-time">7:00 PM</div>
-                    <div class="event-title">Dinner with Friends</div>
-                    <div class="event-tag social">Social</div>
-                </div>
+                <h3>Events for [date]</h3>
+                <!-- JS will insert .calendar-event blocks here -->
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const calendarGrid = document.getElementById("calendarGrid");
+        const monthLabel = document.querySelector(".current-month");
+        const now = new Date();
+        let currentYear = now.getFullYear();
+        let currentMonth = now.getMonth();
+        const userCountryCode = "@(ViewBag.SavedCountry ?? "")";
+        console.log("User country code is:", userCountryCode);
+        let globalHolidays = [];
+
+        function getDaysInMonth(year, monthIndex) {
+            return new Date(year, monthIndex + 1, 0).getDate();
+        }
+
+        function highlightSelectedDay(dayNumber) {
+            const today = new Date();
+            const isToday = (dayEl) => {
+                const todayDate = today.getDate();
+                const todayMonth = today.getMonth();
+                const todayYear = today.getFullYear();
+
+                const cellDate = parseInt(dayEl.textContent);
+                const parentIndex = Array.from(calendarGrid.children).indexOf(dayEl);
+                const cellDateObj = new Date(currentYear, currentMonth, cellDate);
+
+                return (
+                    cellDate === todayDate &&
+                    currentMonth === todayMonth &&
+                    currentYear === todayYear
+                );
+            };
+
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected-day', 'today-outline');
+
+                const cellNum = parseInt(day.textContent);
+                if (cellNum === dayNumber && !day.classList.contains('opacity-0')) {
+                    day.classList.add('selected-day');
+                }
+
+
+                if (isToday(day)) {
+                    if (cellNum !== dayNumber) {
+                        day.classList.add('today-outline'); // 👈 subtle highlight for today if not selected
+                    }
+                }
+            });
+        }
+
+        function renderCalendar(year, monthIndex) {
+            calendarGrid.innerHTML = "";
+
+            const firstDay = new Date(year, monthIndex, 1).getDay();
+            const numDays = getDaysInMonth(year, monthIndex);
+            const monthName = new Date(year, monthIndex).toLocaleString("default", { month: "long" });
+
+            monthLabel.textContent = `${monthName} ${year}`;
+
+            const today = new Date();
+
+            // Fill leading empty slots
+            for (let i = 0; i < firstDay; i++) {
+                const empty = document.createElement("div");
+                empty.className = "calendar-day opacity-0";
+                calendarGrid.appendChild(empty);
+            }
+
+            // Fill current month days
+                    for (let day = 1; day <= numDays; day++) {
+            const date = new Date(year, monthIndex, day);
+            const dateString = date.toLocaleDateString("sv-SE"); // YYYY-MM-DD
+            const div = document.createElement("div");
+            div.className = "calendar-day";
+            div.textContent = day;
+
+            // Weekend styling
+            if (date.getDay() === 0 || date.getDay() === 6) {
+                div.classList.add("weekend-day");
+            }
+
+            // Today styling
+            const today = new Date();
+            if (
+                date.getDate() === today.getDate() &&
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
+            ) {
+                div.classList.add("today");
+            }
+
+            // Apply holiday class if it matches
+            const holidayMatch = globalHolidays.find(h => h.date === dateString);
+            if (holidayMatch) {
+                console.log("🌟 Matched holiday:", dateString, holidayMatch.name);
+                div.classList.add("holiday");
+                div.setAttribute("title", holidayMatch.name);
+            }
+
+            div.addEventListener("click", () => {
+                loadEventsForDay(year, monthIndex, day);
+                highlightSelectedDay(day);
+            });
+
+            calendarGrid.appendChild(div);
+        }
+
+            loadCalendarWithHolidays(year, monthIndex);
+
+            // Auto-load today if in current month
+            if (year === today.getFullYear() && monthIndex === today.getMonth()) {
+                loadEventsForDay(year, monthIndex, today.getDate());
+                highlightSelectedDay(today.getDate());
+            }
+        }
+
+        async function loadCalendarWithHolidays(year, monthIndex) 
+        {
+            const res = await fetch(`/Holiday/GetFromDb?year=${year}&countryCode=${userCountryCode}`);
+            const holidays = await res.json();
+            globalHolidays = holidays;
+
+            console.log("Holidays list contains:", holidays.map(h => h.date));
+
+            const days = document.querySelectorAll(".calendar-day");
+
+            days.forEach(day => {
+                const dayNumber = parseInt(day.textContent);
+                if (isNaN(dayNumber)) return;
+
+                const date = new Date(year, monthIndex, dayNumber).toLocaleDateString('sv-SE');
+                const match = holidays.find(h => h.date === date);
+
+                if (match) {
+                    console.log("Matched holiday:", date, match.name);
+                    day.classList.add("holiday");
+                    day.setAttribute("title", match.name);
+                }
+            });
+        }
+
+        async function loadEventsForDay(year, monthIndex, day) {
+            const eventList = document.querySelector(".calendar-events");
+            const label = eventList.querySelector("h3");
+            const dateStr = `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+            const dateObj = new Date(year, monthIndex, day);
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            const formattedDate = dateObj.toLocaleDateString(undefined, options);
+            label.textContent = `Events for ${formattedDate}`;
+
+            const res = await fetch(`/Calendar/GetEvents?date=${dateStr}`);
+            const events = await res.json();
+
+            const oldEvents = eventList.querySelectorAll(".calendar-event, .empty-state");
+            oldEvents.forEach(e => e.remove());
+
+            // 1. Check if current date is a holiday
+            const holiday = globalHolidays.find(h => h.date === dateStr);
+
+            // 2. Create holiday entry if applicable
+            if (holiday) {
+                const holidayContainer = document.createElement("div");
+                holidayContainer.className = "calendar-event";
+
+                const title = document.createElement("div");
+                title.className = "event-title font-bold text-red-700";
+                title.textContent = `Holiday: ${holiday.name}`;
+
+                holidayContainer.appendChild(document.createElement("div")); // Placeholder for time
+                holidayContainer.appendChild(title);
+                holidayContainer.appendChild(document.createElement("div")); // Placeholder for tag
+
+                eventList.appendChild(holidayContainer);
+            }
+
+            // 3. Show event list or empty state
+            if (events.length === 0 && !holiday) {
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+                empty.textContent = "No events for this day.";
+                eventList.appendChild(empty);
+                return;
+            }
+
+            // 4. Show actual events
+            events.forEach(ev => {
+                const container = document.createElement("div");
+                container.className = "calendar-event";
+
+                const time = document.createElement("div");
+                time.className = "event-time";
+                time.textContent = ev.time || "";
+
+                const title = document.createElement("div");
+                title.className = "event-title";
+                title.textContent = ev.title;
+
+                const tag = document.createElement("div");
+                tag.className = `event-tag ${ev.type?.toLowerCase() || ""}`;
+                tag.textContent = ev.type;
+
+                container.appendChild(time);
+                container.appendChild(title);
+                container.appendChild(tag);
+
+                eventList.appendChild(container);
+            });
+        }
+
+        document.querySelectorAll(".calendar-nav-btn")[0].addEventListener("click", () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentYear, currentMonth);
+        });
+
+        document.querySelectorAll(".calendar-nav-btn")[1].addEventListener("click", () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentYear, currentMonth);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCalendar(currentYear, currentMonth);
+        });
+    </script>
+}
