@@ -9,5 +9,6 @@ namespace dateManagementHTML.Models.Entities
         public string? Role { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public bool IsActive { get; set; } = true;
+        public string? PreferredCountryCode { get; set; }
     }
 }

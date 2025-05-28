@@ -151,6 +151,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     font-size: 14px;
+    text-decoration: none;
 }
 
 .header-actions {
@@ -441,6 +442,7 @@ body {
     border-radius: 20px;
     font-size: 14px;
     color: #8a94a6;
+    text-decoration: none;
 }
 
     .filter-btn.active {
@@ -568,6 +570,7 @@ body {
     cursor: pointer;
     border-radius: 20px;
     font-size: 13px;
+    text-decoration: none;
 }
 
     .category-btn.all {

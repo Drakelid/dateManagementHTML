@@ -10,6 +10,15 @@
 
 <div class="app-container">
     <div class="main-content">
+        @if (TempData["Message"] != null)
+        {
+            <div id="toast"
+                 class="position-fixed top-6 right-4 z-50 flex max-w-sm items-center justify-between space-x-4 rounded-lg bg-green-100 px-4 py-3 text-green-800 shadow-lg transition-opacity duration-500 ease-in-out opacity-100 pointer-events-auto">
+                <span class="text-sm font-medium">
+                    <strong class="font-semibold">Success:</strong> @TempData["Message"]
+                </span>
+            </div>
+        }
         <div class="header-section">
             <div class="header-image-text">
                 <div class="illustration">
@@ -57,6 +66,13 @@
             <div class="settings-content content-card">
                 <div class="settings-tab active" id="account">
                     <h2>Account Settings</h2>
+
+                    <div class="settings-card content-card">
+                        <form asp-controller="Settings" asp-action="SaveCountry" method="post">
+                            <select id="countryDropdown" name="countryCode" class="form-control"></select>
+                            <button type="submit" class="save-btn mt-2">Save Country</button>
+                        </form>
+                    </div>
 
                     <div class="settings-card content-card">
                         <h3>Profile Information</h3>
@@ -255,3 +271,31 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const savedCountryCode = '@ViewBag.SavedCountry';
+        fetch('/Country/List')
+            .then(res => res.json())
+            .then(data => {
+                const dropdown = document.getElementById('countryDropdown');
+                data.forEach(c => {
+                    const option = document.createElement('option');
+                    option.value = c.countryCode;
+                    option.textContent = c.name;
+                    if (c.countryCode === savedCountryCode) {
+                        option.selected = true;
+                    }
+                    dropdown.appendChild(option);
+                });
+            });
+            // Auto-hide toast after 4 seconds
+            setTimeout(() => {
+                const toast = document.getElementById("toast");
+                if (toast) {
+                    toast.classList.add("opacity-0");
+                    setTimeout(() => toast.remove(), 500); // Wait for transition to finish
+                }
+            }, 4000);
+    </script>
+}

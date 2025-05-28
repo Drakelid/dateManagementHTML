@@ -1,5 +1,6 @@
 using dateManagementHTML.Data;
 using dateManagementHTML.Models.Entities;
+using dateManagementHTML.Services;
 using dateManagementHTML.Services.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +16,9 @@ public class Program
 
         builder.Services.AddControllersWithViews(options =>
         {
-            var policy = new AuthorizationPolicyBuilder()
+            options.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
-                .Build();
-            options.Filters.Add(new AuthorizeFilter(policy));
+                .Build()));
         });
 
         builder.Services.AddControllersWithViews();
@@ -38,6 +38,10 @@ public class Program
         .AddSignInManager<SignInManager<ApplicationUser>>();
 
         builder.Services.AddScoped<IPasswordHasher<ApplicationUser>, Argon2PasswordHasher<ApplicationUser>>();
+
+        builder.Services.AddHttpClient<NagerApiService>();
+        
+        builder.Services.AddScoped<CountrySeeder>();
 
         var app = builder.Build();
 

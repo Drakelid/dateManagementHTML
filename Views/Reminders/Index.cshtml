@@ -1,23 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿@model List<dateManagementHTML.Models.Entities.Reminder>
 @{
     ViewData["Title"] = "Reminders";
 }
+
+@{
+    var completedFilter = Context.Request.Query["completed"].ToString().ToLower();
+}
+
 
 <div class="app-container">
     <div class="main-content">
         <div class="header-section">
             <div class="header-image-text">
                 <div class="illustration">
-                    <img src="images/reminders.png" alt="Reminders Illustration" class="dashboard-illustration">
+                    <img src="/images/reminders.png" alt="Reminders Illustration" class="dashboard-illustration">
                 </div>
                 <div class="header-text">
                     <h1>Reminders</h1>
-                    <button class="create-reminder-btn">Create a Reminder</button>
+                    <a asp-controller="Reminders" asp-action="Create" class="create-reminder-btn">Create a Reminder</a>
                 </div>
             </div>
             <div class="header-actions">
@@ -36,105 +36,61 @@
             </div>
 
             <div class="reminder-filters">
-                <button class="filter-btn active">All</button>
-                <button class="filter-btn">Today</button>
-                <button class="filter-btn">Upcoming</button>
-                <button class="filter-btn">Completed</button>
+                <a asp-action="Index" class="filter-btn @(string.IsNullOrEmpty(completedFilter) ? "active" : "")">All</a>
+                <a asp-action="Index" asp-route-completed="false" class="filter-btn @(completedFilter == "false" ? "active" : "")">Pending</a>
+                <a asp-action="Index" asp-route-completed="true" class="filter-btn @(completedFilter == "true" ? "active" : "")">Completed</a>
             </div>
 
+
+
             <div class="reminders-list">
-                <div class="reminder-item">
-                    <div class="reminder-checkbox">
-                        <input type="checkbox" id="reminder1">
-                        <label for="reminder1"></label>
-                    </div>
-                    <div class="reminder-content">
-                        <h3>Prepare slides for presentation</h3>
-                        <div class="reminder-meta">
-                            <span class="reminder-date">Today</span>
-                            <span class="reminder-time">9:00 AM</span>
-                            <span class="reminder-tag work">Work</span>
-                        </div>
-                    </div>
-                    <div class="reminder-actions">
-                        <button class="reminder-edit-btn">
-                            <i class="fa-solid fa-pencil"></i>
-                        </button>
-                        <button class="reminder-delete-btn">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
+                @foreach (var reminder in Model)
+                {
+                    var dayLabel = reminder.Date.Date == DateTime.Today ? "Today"
+                    : reminder.Date.Date == DateTime.Today.AddDays(1) ? "Tomorrow"
+                    : reminder.Date.ToString("dddd");
 
-                <div class="reminder-item">
-                    <div class="reminder-checkbox">
-                        <input type="checkbox" id="reminder2">
-                        <label for="reminder2"></label>
-                    </div>
-                    <div class="reminder-content">
-                        <h3>Pick up prescription</h3>
-                        <div class="reminder-meta">
-                            <span class="reminder-date">Tomorrow</span>
-                            <span class="reminder-time">2:30 PM</span>
-                            <span class="reminder-tag health">Health</span>
+                    <div class="reminder-item">
+                        <form asp-action="ToggleComplete" method="post" class="reminder-checkbox">
+                            <input type="hidden" name="id" value="@reminder.Id" />
+                            <input type="checkbox" onchange="this.form.submit()" @(reminder.IsCompleted ? "checked" : "") />
+                        </form>
+                        <div class="reminder-content">
+                            <h3>@reminder.Title</h3>
+                            <div class="reminder-meta">
+                                <span class="reminder-date">@dayLabel</span>
+                                <span class="reminder-time">
+                                    <span class="reminder-time">@reminder.Time.ToString(@"hh\:mm")</span>
+                                </span>
+                                <span class="reminder-tag @reminder.Tag.ToLower()">@reminder.Tag</span>
+                            </div>
+                        </div>
+                        <div class="reminder-actions">
+                            <a asp-action="Edit" asp-route-id="@reminder.Id" class="reminder-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>
+                            <form asp-action="Delete" asp-route-id="@reminder.Id" method="post" style="display:inline;">
+                                <button type="submit" class="reminder-delete-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    <div class="reminder-actions">
-                        <button class="reminder-edit-btn">
-                            <i class="fa-solid fa-pencil"></i>
-                        </button>
-                        <button class="reminder-delete-btn">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="reminder-item">
-                    <div class="reminder-checkbox">
-                        <input type="checkbox" id="reminder3">
-                        <label for="reminder3"></label>
-                    </div>
-                    <div class="reminder-content">
-                        <h3>Buy groceries for dinner party</h3>
-                        <div class="reminder-meta">
-                            <span class="reminder-date">Friday</span>
-                            <span class="reminder-time">5:00 PM</span>
-                            <span class="reminder-tag social">Social</span>
-                        </div>
-                    </div>
-                    <div class="reminder-actions">
-                        <button class="reminder-edit-btn">
-                            <i class="fa-solid fa-pencil"></i>
-                        </button>
-                        <button class="reminder-delete-btn">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="reminder-item completed">
-                    <div class="reminder-checkbox">
-                        <input type="checkbox" id="reminder4" checked>
-                        <label for="reminder4"></label>
-                    </div>
-                    <div class="reminder-content">
-                        <h3>Schedule team meeting</h3>
-                        <div class="reminder-meta">
-                            <span class="reminder-date">Yesterday</span>
-                            <span class="reminder-time">11:00 AM</span>
-                            <span class="reminder-tag work">Work</span>
-                        </div>
-                    </div>
-                    <div class="reminder-actions">
-                        <button class="reminder-edit-btn">
-                            <i class="fa-solid fa-pencil"></i>
-                        </button>
-                        <button class="reminder-delete-btn">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function toggleComplete(checkbox, id) {
+            const item = document.getElementById(`reminder-item-${id}`);
+            if (checkbox.checked) {
+                item.classList.add("completed");
+            } else {
+                item.classList.remove("completed");
+            }
+        }
+    </script>
+}
