@@ -149,8 +149,9 @@ namespace dateManagementHTML.Controllers
             var countryCode = user.PreferredCountryCode;
 
             var allHolidays = await _context.Holidays
-                .Where(h => h.CountryCode == countryCode)
-                .ToListAsync();
+            .Where(h => h.IsActive && h.CountryCode == countryCode)
+            .ToListAsync();
+
 
             var holidaysInRange = allHolidays
                 .Where(h => h.Date.Date >= start.Date && h.Date.Date <= end.Date)

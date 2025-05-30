@@ -14,16 +14,15 @@ namespace dateManagementHTML.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFromDb(int year, string countryCode)
+        public IActionResult GetFromDb(int year, string countryCode)
         {
-            var holidays = await _context.Holidays
-                .Where(h => h.Date.Year == year && h.CountryCode == countryCode)
-                .Select(h => new
-                {
-                    date = h.Date.ToString("yyyy-MM-dd"),
-                    name = h.Name
+            var holidays = _context.Holidays
+                .Where(h => h.IsActive && h.Date.Year == year && h.CountryCode == countryCode)
+                .Select(h => new {
+                    h.Name,
+                    date = h.Date.ToString("yyyy-MM-dd")
                 })
-                .ToListAsync();
+                .ToList();
 
             return Json(holidays);
         }

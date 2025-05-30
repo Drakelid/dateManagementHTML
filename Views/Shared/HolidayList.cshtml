@@ -1,0 +1,38 @@
+﻿@model List<dateManagementHTML.Models.Entities.Holiday>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var h in Model)
+        {
+            <tr>
+                <td>@h.Date.ToString("yyyy-MM-dd")</td>
+                <td>@h.Name</td>
+                <td>@h.CountryCode</td>
+                <td>@(h.IsCustom ? "Custom" : "Synced")</td>
+                <td>
+                    @if (h.IsCustom)
+                    {
+                        <form asp-action="DeleteHoliday" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@h.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Synced</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

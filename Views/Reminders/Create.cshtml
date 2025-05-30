@@ -7,7 +7,23 @@
 <div class="app-container">
     <div class="main-content">
         <div class="header-section">
-            <h1>Create Reminder</h1>
+            <div class="header-image-text">
+                <div class="illustration">
+                    <img src="@Url.Content("~/images/reminders.png")" alt="Reminders Illustration" class="dashboard-illustration" />
+                </div>
+                <div class="header-text">
+                    <h1>Create a reminder</h1>
+                    <a asp-controller="Reminders" asp-action="Create" class="create-reminder-btn">Create a Reminder</a>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="refresh-btn">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+                <button class="notification-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+            </div>
         </div>
 
         <div class="content-card">

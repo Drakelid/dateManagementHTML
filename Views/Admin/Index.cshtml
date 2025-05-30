@@ -1,16 +1,105 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model dateManagementHTML.Models.ViewModels.AdminHolidayViewModel
 @{
+    ViewData["Title"] = "Admin Panel";
 }
 
-<form asp-controller="Admin" asp-action="Sync" method="get">
-    <button type="submit" class="btn btn-outline">Sync Country List</button>
-</form>
+<div class="app-container">
+    <div class="main-content">
+        <div class="header-section">
+            <div class="header-image-text">
+                <div class="illustration">
+                    <img src="@Url.Content("~/images/settings.png")" alt="Admin Illustration" class="dashboard-illustration" />
+                </div>
+                <div class="header-text">
+                    <h1>Admin Panel</h1>
+                </div>
+            </div>
+        </div>
 
+        <div class="admin-container">
+            <div class="admin-sidebar content-card">
+                <div class="admin-nav-item active" data-tab="sync">
+                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                    <span>Synchronize</span>
+                </div>
+                <div class="admin-nav-item" data-tab="holidays">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                    <span>Manage Holidays</span>
+                </div>
+            </div>
+
+            <div class="admin-content content-card">
+                <div class="admin-tab active" id="sync">
+                    @await Html.PartialAsync("_SyncTab")
+                </div>
+
+                <div class="admin-tab" id="holidays">
+                    @await Html.PartialAsync("_HolidayTab", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const defaultTab = "@ViewBag.ActiveTab" || "sync";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const allTabs = document.querySelectorAll('.admin-nav-item');
+            const allPanels = document.querySelectorAll('.admin-tab');
+
+            allTabs.forEach(tab => {
+                tab.classList.remove("active");
+                if (tab.dataset.tab === defaultTab) {
+                    tab.classList.add("active");
+                }
+            });
+
+            allPanels.forEach(pane => {
+                pane.classList.remove("active");
+                if (pane.id === defaultTab) {
+                    pane.classList.add("active");
+                }
+            });
+
+            // Tab click handling
+            allTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.tab;
+
+                    allTabs.forEach(i => i.classList.remove("active"));
+                    tab.classList.add("active");
+
+                    allPanels.forEach(pane => {
+                        pane.classList.remove("active");
+                        if (pane.id === target) pane.classList.add("active");
+                    });
+                });
+            });
+
+            // Country filter handling (AJAX)
+            const select = document.getElementById("countryCode");
+            if (select) {
+                select.addEventListener("change", function () {
+                    const selectedCode = this.value;
+                    const url = `/Admin/Holidays?countryCode=${encodeURIComponent(selectedCode)}`;
+
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const newContent = doc.querySelector("#holidayTableContainer");
+                            const currentContainer = document.querySelector("#holidayTableContainer");
+
+                            if (newContent && currentContainer) {
+                                currentContainer.innerHTML = newContent.innerHTML;
+                            }
+                        })
+                        .catch(error => console.error("Error updating holiday table:", error));
+                });
+            }
+        });
+    </script>
 }
-
-<form asp-controller="Admin" asp-action="SyncHolidays" method="post">
-    <input type="hidden" name="year" value="@DateTime.Now.Year" />
-    <button type="submit" class="btn btn-outline">Sync Holidays</button>
-</form>

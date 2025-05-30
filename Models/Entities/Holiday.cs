@@ -14,5 +14,9 @@ namespace dateManagementHTML.Models.Entities
 
         [Required]
         public string CountryCode { get; set; } // e.g. "NO", "DE"
+
+        public bool IsCustom { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
     }
 }

@@ -114,18 +114,22 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        const startInput = document.querySelector('[name="StartDateTime"]');
-        const endInput = document.querySelector('[name="EndDateTime"]');
         const infoDiv = document.getElementById("workingDaysInfo");
 
         function updateWorkingDays() {
-            const start = startInput.value.split("T")[0];
-            const end = endInput.value.split("T")[0];
+            const startDate = document.getElementById("startDate").value;
+            const startTime = document.getElementById("startTime").value;
+            const endDate = document.getElementById("endDate").value;
+            const endTime = document.getElementById("endTime").value;
 
-            if (!start || !end) {
+            // Only proceed if both date and time are selected
+            if (!startDate || !startTime || !endDate || !endTime) {
                 infoDiv.textContent = '';
                 return;
             }
+
+            const start = `${startDate}T${startTime}`;
+            const end = `${endDate}T${endTime}`;
 
             fetch(`/Events/GetWorkingDays?start=${start}&end=${end}`)
                 .then(res => res.json())
@@ -147,7 +151,6 @@
 
                             const parts = formatted.split(" ");
                             const capitalized = `${parts[0]} ${parts[1].charAt(0).toUpperCase() + parts[1].slice(1)} ${parts[2]}`;
-
                             message += `<li>${capitalized}: ${h.name}</li>`;
                         });
 
@@ -156,12 +159,16 @@
 
                     infoDiv.innerHTML = message;
                 })
-
                 .catch(err => {
                     console.error("Error fetching working days:", err);
                     infoDiv.textContent = '';
                 });
         }
+
+        document.getElementById("startDate").addEventListener('change', updateWorkingDays);
+        document.getElementById("startTime").addEventListener('change', updateWorkingDays);
+        document.getElementById("endDate").addEventListener('change', updateWorkingDays);
+        document.getElementById("endTime").addEventListener('change', updateWorkingDays);
 
         // These should be *outside* the function
         startInput.addEventListener('change', updateWorkingDays);

@@ -770,6 +770,82 @@ body {
         color: #333;
     }
 
+/* Admin Panel Styles */
+.admin-container {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.admin-sidebar {
+    width: 250px;
+    padding: 20px;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.save-admin-btn {
+    background-color: #5695cd;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.admin-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    color: #8a94a6;
+}
+
+    .admin-nav-item i {
+        margin-right: 10px;
+        font-size: 18px;
+    }
+
+    .admin-nav-item.active {
+        background-color: #eef7ff;
+        color: #5695cd;
+        font-weight: 600;
+    }
+
+.admin-tab {
+    display: none;
+}
+
+    .admin-tab.active {
+        display: block;
+    }
+
+    .admin-tab h2 {
+        font-size: 22px;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+.admin-card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+    .admin-card h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
 .form-group {
     margin-bottom: 15px;
 }

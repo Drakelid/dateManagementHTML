@@ -1,0 +1,82 @@
+﻿@model dateManagementHTML.Models.ViewModels.AdminHolidayViewModel
+
+<div class="settings-card content-card">
+    <h3>Manage Holidays</h3>
+
+    <!-- Country Filter (no longer using traditional form submit) -->
+    <div class="form-inline mb-3">
+        <label for="countryCode" class="mr-2">Filter by Country:</label>
+        <select name="countryCode" id="countryCode" class="form-control mr-2">
+            <option value="">All Countries</option>
+            @foreach (var country in Model.AvailableCountries)
+            {
+                var selected = Model.SelectedCountryCode == country.CountryCode ? "selected" : "";
+                @:<option value="@country.CountryCode" @selected>@country.Name (@country.CountryCode)</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <a asp-action="AddHoliday" class="btn btn-success">
+            <i class="fa fa-plus"></i> Add Holiday
+        </a>
+    </div>
+
+    <!-- Wrap table content in a container for dynamic replacement -->
+    <div id="holidayTableContainer">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var h in Model.Holidays)
+                {
+                    <tr>
+                        <td>@h.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@h.Name</td>
+                        <td>@h.CountryCode</td>
+                        <td>@(h.IsCustom ? "Custom" : "Synced")</td>
+                        <td>
+                            @if (!h.IsActive)
+                            {
+                                <span class="text-danger">Inactive</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">Active</span>
+                            }
+                        </td>
+                        <td>
+                            @if (h.IsCustom)
+                            {
+                                <a asp-action="EditHoliday" asp-route-id="@h.Id" class="btn btn-primary btn-sm" title="Edit">
+                                    <i class="fa fa-pencil-alt"></i>
+                                </a>
+                                <form asp-action="DeleteHoliday" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@h.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            }
+
+                            <form asp-action="ToggleHoliday" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@h.Id" />
+                                <button type="submit" class="btn btn-secondary btn-sm" title="Toggle Active">
+                                    <i class="fa fa-toggle-@(h.IsActive ? "on" : "off")"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
