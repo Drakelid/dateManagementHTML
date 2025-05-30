@@ -21,7 +21,7 @@
         <div class="header-section">
             <div class="header-image-text">
                 <div class="illustration">
-                    <img src="images/events.png" alt="Events Illustration" class="dashboard-illustration">
+                    <img src="@Url.Content("~/images/events.png")" alt="Events Illustration" class="dashboard-illustration" />
                 </div>
                 <div class="header-text">
                     <h1>Events</h1>
@@ -88,7 +88,15 @@
                             <p class="event-description">@evt.Description</p>
                         </div>
                         <div class="event-actions">
-                            <!-- future edit/delete buttons -->
+                            <a asp-action="Edit" asp-route-id="@evt.Id" class="event-edit-btn">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>
+                            <form asp-action="Delete" asp-route-id="@evt.Id" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="event-delete-btn" onclick="return confirm('Are you sure you want to delete this event?')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 }

@@ -9,18 +9,27 @@ namespace dateManagementHTML.Models.Entities // ✅ Add this line
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Event Name")]
         public string EventName { get; set; }
 
+        [Display(Name = "Description")]
         public string? Description { get; set; }
+
+        [Display(Name = "Location")]
         public string? Location { get; set; }
 
         [Required]
+        [Display(Name = "From")]
         public DateTime StartDateTime { get; set; }
 
+        [Display(Name = "To")]
         public DateTime? EndDateTime { get; set; }
+        
+        [Display(Name = "All day")]
         public bool IsAllDay { get; set; }
 
         [Required]
+        [Display(Name = "Tag")]
         public string Tag { get; set; }
 
         [ValidateNever]
