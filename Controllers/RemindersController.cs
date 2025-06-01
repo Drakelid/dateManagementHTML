@@ -71,23 +71,21 @@ namespace dateManagementHTML.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool? completed)
         {
             var userId = _userManager.GetUserId(User);
-            var today = DateTime.Today;
-            var tomorrow = today.AddDays(1);
-            var nextThursday = today.AddDays(((int)DayOfWeek.Thursday - (int)today.DayOfWeek + 7) % 7);
+            var query = _context.Reminders
+                .Where(r => r.UserId == userId);
 
-            var reminders = await _context.Reminders
-                .Where(r => r.UserId == userId)
+            if (completed.HasValue)
+            {
+                query = query.Where(r => r.IsCompleted == completed.Value);
+            }
+
+            var reminders = await query
                 .OrderBy(r => r.Date)
-                .ThenBy(r => r.Time) // ✅ This line ensures morning-first sorting
+                .ThenBy(r => r.Time)
                 .ToListAsync();
-
-
-            ViewBag.Today = reminders.Where(r => r.Date.Date == today).ToList();
-            ViewBag.Tomorrow = reminders.Where(r => r.Date.Date == tomorrow).ToList();
-            ViewBag.Thursday = reminders.Where(r => r.Date.DayOfWeek == DayOfWeek.Thursday).ToList();
 
             return View(reminders);
         }
@@ -105,5 +103,17 @@ namespace dateManagementHTML.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var reminder = await _context.Reminders.FindAsync(id);
+            if (reminder == null) return NotFound();
+
+            _context.Reminders.Remove(reminder);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
     }
 }

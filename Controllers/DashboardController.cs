@@ -1,20 +1,57 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using dateManagementHTML.Models;
+using dateManagementHTML.Data;
+using dateManagementHTML.Models.Entities;
+using dateManagementHTML.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace dateManagementHTML.Controllers;
-
-public class DashboardController : Controller
+namespace dateManagementHTML.Controllers
 {
-    public IActionResult Index()
+    [Authorize]
+    public class DashboardController : Controller
     {
-        return View();
-    }
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public DashboardController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var userId = _userManager.GetUserId(User);
+            var today = DateTime.Today;
+
+            var todayEvents = await _context.Events
+            .Where(e => e.UserId == userId
+                     && e.StartDateTime.Date == today
+                     && !e.IsCompleted)
+            .ToListAsync();
+
+
+            var todayReminders = await _context.Reminders
+                .Where(r => r.UserId == userId && r.Date.Date == today)
+                .ToListAsync();
+
+
+            var completedCount = todayEvents.Count(e => e.IsCompleted);
+            var totalCount = todayEvents.Count;
+
+            var viewModel = new DashboardViewModel
+            {
+                TodayEvents = todayEvents,
+                TodayReminders = todayReminders,
+                CompletedEventCount = completedCount,
+                TotalEventCount = totalCount
+            };
+
+            return View(viewModel);
+        }
     }
 }

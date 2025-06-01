@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@model dateManagementHTML.Models.Entities.Event
+﻿@model dateManagementHTML.Models.Entities.Event
 @{
     ViewData["Title"] = "Create Event";
 }
@@ -36,6 +32,7 @@
                         </ul>
                     </div>
                 }
+
                 <div class="form-group">
                     <label asp-for="EventName"></label>
                     <input asp-for="EventName" class="form-control" />
@@ -57,40 +54,18 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label asp-for="StartDateTime"></label>
-                        <div class="form-group">
-                            <label>From (Date)</label>
-                            <input type="date" id="startDate" class="form-control" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>From (Time)</label>
-                            <input type="time" id="startTime" class="form-control" />
-                        </div>
+                        <input asp-for="StartDateTime" class="form-control" type="datetime-local" />
                         <span asp-validation-for="StartDateTime" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label asp-for="EndDateTime"></label>
-                        <div class="form-group">
-                            <label>To (Date)</label>
-                            <input type="date" id="endDate" class="form-control" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>To (Time)</label>
-                            <input type="time" id="endTime" class="form-control" />
-                        </div>
+                        <input asp-for="EndDateTime" class="form-control" type="datetime-local" />
                         <span asp-validation-for="EndDateTime" class="text-danger"></span>
                     </div>
                 </div>
 
-                <input type="hidden" asp-for="StartDateTime" />
-<input type="hidden" asp-for="EndDateTime" />
-
-
-                <div id="workingDaysInfo" class="text-info mt-2"></div>
-
-                <div class="form-check">
+                <div class="form-check mb-3">
                     <input asp-for="IsAllDay" class="form-check-input" />
                     <label asp-for="IsAllDay" class="form-check-label"></label>
                 </div>
@@ -104,7 +79,7 @@
                     </select>
                     <span asp-validation-for="Tag" class="text-danger"></span>
                 </div>
-                    
+
                 <button type="submit" class="create-event-btn">Save Event</button>
             </form>
         </div>
@@ -113,83 +88,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script>
-        const infoDiv = document.getElementById("workingDaysInfo");
-
-        function updateWorkingDays() {
-            const startDate = document.getElementById("startDate").value;
-            const startTime = document.getElementById("startTime").value;
-            const endDate = document.getElementById("endDate").value;
-            const endTime = document.getElementById("endTime").value;
-
-            // Only proceed if both date and time are selected
-            if (!startDate || !startTime || !endDate || !endTime) {
-                infoDiv.textContent = '';
-                return;
-            }
-
-            const start = `${startDate}T${startTime}`;
-            const end = `${endDate}T${endTime}`;
-
-            fetch(`/Events/GetWorkingDays?start=${start}&end=${end}`)
-                .then(res => res.json())
-                .then(data => {
-                    console.log("API response:", data);
-
-                    let message = `You selected ${data.totalDays} day(s): ${data.workingDays} working day(s), excluding ${data.weekends} weekend day(s) and ${data.holidays} holiday(s).`;
-
-                    if (data.excludedHolidayList && data.excludedHolidayList.length > 0) {
-                        message += "<br><strong>Excluded Holidays:</strong><ul>";
-
-                        data.excludedHolidayList.forEach(h => {
-                            const holidayDate = new Date(h.date);
-                            const formatted = holidayDate.toLocaleDateString('en-US', {
-                                day: '2-digit',
-                                month: 'long',
-                                year: 'numeric'
-                            });
-
-                            const parts = formatted.split(" ");
-                            const capitalized = `${parts[0]} ${parts[1].charAt(0).toUpperCase() + parts[1].slice(1)} ${parts[2]}`;
-                            message += `<li>${capitalized}: ${h.name}</li>`;
-                        });
-
-                        message += "</ul>";
-                    }
-
-                    infoDiv.innerHTML = message;
-                })
-                .catch(err => {
-                    console.error("Error fetching working days:", err);
-                    infoDiv.textContent = '';
-                });
-        }
-
-        document.getElementById("startDate").addEventListener('change', updateWorkingDays);
-        document.getElementById("startTime").addEventListener('change', updateWorkingDays);
-        document.getElementById("endDate").addEventListener('change', updateWorkingDays);
-        document.getElementById("endTime").addEventListener('change', updateWorkingDays);
-
-        // These should be *outside* the function
-        startInput.addEventListener('change', updateWorkingDays);
-        endInput.addEventListener('change', updateWorkingDays);
-
-        const form = document.querySelector("form");
-        form.addEventListener("submit", function () {
-            const startDate = document.getElementById("startDate").value;
-            const startTime = document.getElementById("startTime").value;
-            const endDate = document.getElementById("endDate").value;
-            const endTime = document.getElementById("endTime").value;
-
-            if (startDate && startTime) {
-                document.querySelector('[name="StartDateTime"]').value = `${startDate}T${startTime}`;
-            }
-
-            if (endDate && endTime) {
-                document.querySelector('[name="EndDateTime"]').value = `${endDate}T${endTime}`;
-            }
-        });
-    </script>
 }
-
-

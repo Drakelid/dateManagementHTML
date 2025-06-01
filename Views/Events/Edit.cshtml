@@ -66,13 +66,17 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label asp-for="StartDateTime"></label>
-                        <input asp-for="StartDateTime" type="datetime-local" class="form-control" />
+                        <input type="datetime-local" class="form-control"
+                               name="StartDateTime"
+                               value="@Model.StartDateTime.ToString("yyyy-MM-ddTHH:mm")" />
                         <span asp-validation-for="StartDateTime" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label asp-for="EndDateTime"></label>
-                        <input asp-for="EndDateTime" type="datetime-local" class="form-control" />
+                        <input type="datetime-local" class="form-control"
+                               name="EndDateTime"
+                               value="@(Model.EndDateTime.HasValue? Model.EndDateTime.Value.ToString("yyyy-MM-ddTHH:mm") : "")" />
                         <span asp-validation-for="EndDateTime" class="text-danger"></span>
                     </div>
                 </div>

@@ -196,5 +196,20 @@ namespace dateManagementHTML.Controllers
             return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> ToggleComplete(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var evt = await _context.Events.FirstOrDefaultAsync(e => e.Id == id && e.UserId == userId);
+            if (evt == null) return NotFound();
+
+            evt.IsCompleted = !evt.IsCompleted;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index"); // or "Dashboard" if you're toggling from there
+        }
+
+
     }
 }

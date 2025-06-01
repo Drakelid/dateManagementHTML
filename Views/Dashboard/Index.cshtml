@@ -1,5 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Home";
+﻿@model dateManagementHTML.Models.ViewModels.DashboardViewModel
+
+@{
+    var percent = Model.CompletionPercentage;
+    string backgroundStyle = $"background-image: conic-gradient(#5cbea7 {percent}%, #e0f5f1 0);";
+    
+    ViewData["Title"] = "Dashboard";
 }
 
 <div class="app-container">
@@ -25,28 +30,23 @@
         </div>
 
         <div class="upcoming-events content-card">
-            <h2>Upcoming Events</h2>
+            <h2>Today's Events</h2>
             <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-time">10:00 AM</div>
-                    <div class="event-title">Team Meeting</div>
-                    <div class="event-tag work">Work</div>
-                </div>
-                <div class="event-card">
-                    <div class="event-time">1:00 PM</div>
-                    <div class="event-title">Doctor's Appointment</div>
-                    <div class="event-tag health">Health</div>
-                </div>
-                <div class="event-card">
-                    <div class="event-time">All Day</div>
-                    <div class="event-title">Conference</div>
-                    <div class="event-tag work">Work</div>
-                </div>
-                <div class="event-card">
-                    <div class="event-time">7:00 PM</div>
-                    <div class="event-title">Dinner with Friends</div>
-                    <div class="event-tag social">Social</div>
-                </div>
+                @if (Model.TodayEvents.Any())
+                {
+                    foreach (var evt in Model.TodayEvents)
+                    {
+                        <div class="event-card">
+                            <div class="event-time">@evt.StartDateTime.ToString("HH:mm")</div>
+                            <div class="event-title">@evt.EventName</div>
+                            <div class="event-tag @evt.Tag.ToLower()">@evt.Tag</div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div>No events for today.</div>
+                }
             </div>
         </div>
 
@@ -54,19 +54,25 @@
             <h2>Today's Agenda</h2>
             <div class="agenda-grid">
                 <div class="agenda-card content-card">
-                    <h3>Today's Agenda</h3>
-                    <div class="agenda-time">10:00 AM</div>
-                    <div class="agenda-event">Team Meeting</div>
-                </div>
-                <div class="agenda-card content-card">
                     <h3>Reminders</h3>
-                    <div class="reminder-text">Prepare slides for presentation</div>
+                    @if (Model.TodayReminders.Any())
+                    {
+                        foreach (var reminder in Model.TodayReminders)
+                        {
+                            <div class="reminder-text">@reminder.Title</div>
+                        }
+                    }
+                    else
+                    {
+                        <div>No reminders for today.</div>
+                    }
                 </div>
+
                 <div class="agenda-card content-card">
                     <h3>Progress</h3>
                     <div class="progress-container">
-                        <div class="progress-circle">
-                            <div class="progress-text">70%</div>
+                        <div class="progress-circle" style="@backgroundStyle">
+                            <div class="progress-text">@percent%</div>
                         </div>
                     </div>
                 </div>

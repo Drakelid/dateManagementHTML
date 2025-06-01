@@ -41,5 +41,9 @@ namespace dateManagementHTML.Models.Entities // ✅ Add this line
         [ValidateNever]
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
+
+        [Display(Name = "Completed")]
+        public bool IsCompleted { get; set; } = false;
+
     }
 }

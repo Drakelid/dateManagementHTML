@@ -65,7 +65,7 @@
             <div class="events-list">
                 @foreach (var evt in Model)
                 {
-                    <div class="event-item">
+                    <div class="event-item @(evt.IsCompleted ? "completed" : "")">
                         <div class="event-date">
                             <span class="day">@evt.StartDateTime.Day</span>
                             <span class="month">@evt.StartDateTime.ToString("MMM")</span>
@@ -88,6 +88,11 @@
                             <p class="event-description">@evt.Description</p>
                         </div>
                         <div class="event-actions">
+                            <form asp-action="ToggleComplete" method="post" style="display:inline;" class="event-checkbox">
+                                <input type="hidden" name="id" value="@evt.Id" />
+                                <input type="checkbox" id="event-checkmark" onchange="this.form.submit()" title="Mark as complete" @(evt.IsCompleted ? "checked" : "") />
+                                <label for="event-checkmark"></label>
+                            </form>
                             <a asp-action="Edit" asp-route-id="@evt.Id" class="event-edit-btn">
                                 <i class="fa-solid fa-pencil"></i>
                             </a>

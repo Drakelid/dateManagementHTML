@@ -20,4 +20,14 @@ YYYY-MM-DD | 3 h | “Short task description” | 900,-
 
 2025-05-09 | 2h | “Account functionality has been successfully implemented into the main project.” | 600,-
 
+2025-05-27 | 5h | “Implemented HTML/CSS design into the project. Added functionality to the navigation sidebar. Added a create event page and made the Events page functional. Added template for storing Events into the database.” | 1500,-
+
+2025-05-28 | 5h | “Made calendar page functional. Calendar highlights official and custom holidays with a red color and a bold font on the number in the calendar view. Implemented event display functionality in accordance with calendar. Added admin page. Added country and holiday synchronization features in the admin page.” | 1500,-
+
+2025-05-30 | 5h | “Added nav-link to admin page in sidebar. Added a admin side panel inside the admin page to separate various admin features. Current features sync countries/holidays and add custom holidays and manage official or custom holidays. Made create events page fully functional. Added new page for editing existing events.” | 1500,-
+
+2025-05-31 | 4h | “Made reminders page fully functional, previously lacked certain features. Made Dashboard functional. It now displays events and reminders for the day. The event progress while is functional and dynamic.” | 1200,-
+
+2025-05-32 | 6h | “Added navigation bar filter, to avoid displaying it during login and registration. Worked further on user settings page. Changed up how preferred country works, added country ISO codes in parentashes next to country name. Made profile information, password and delete account functional. Allows users to change profile data, change password and preferred country.” | 1800,-
+
 ```

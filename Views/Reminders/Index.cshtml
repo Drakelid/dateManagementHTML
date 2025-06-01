@@ -4,7 +4,7 @@
 }
 
 @{
-    var completedFilter = Context.Request.Query["completed"].ToString().ToLower();
+    var completedFilter = Context.Request.Query["completed"].ToString().ToLowerInvariant();
 }
 
 
@@ -41,8 +41,6 @@
                 <a asp-action="Index" asp-route-completed="true" class="filter-btn @(completedFilter == "true" ? "active" : "")">Completed</a>
             </div>
 
-
-
             <div class="reminders-list">
                 @foreach (var reminder in Model)
                 {
@@ -50,13 +48,9 @@
                     : reminder.Date.Date == DateTime.Today.AddDays(1) ? "Tomorrow"
                     : reminder.Date.ToString("dddd");
 
-                    <div class="reminder-item">
-                        <form asp-action="ToggleComplete" method="post" class="reminder-checkbox">
-                            <input type="hidden" name="id" value="@reminder.Id" />
-                            <input type="checkbox" onchange="this.form.submit()" @(reminder.IsCompleted ? "checked" : "") />
-                        </form>
+                    <div class="reminder-item @(reminder.IsCompleted ? "completed" : "")" id="reminder-item-@reminder.Id">
                         <div class="reminder-content">
-                            <h3>@reminder.Title</h3>
+                            <h3 class="@(reminder.IsCompleted ? "completed-text" : "")">@reminder.Title</h3>
                             <div class="reminder-meta">
                                 <span class="reminder-date">@dayLabel</span>
                                 <span class="reminder-time">
@@ -66,6 +60,11 @@
                             </div>
                         </div>
                         <div class="reminder-actions">
+                            <form asp-action="ToggleComplete" method="post" class="reminder-checkbox">
+                                <input type="hidden" name="id" value="@reminder.Id" />
+                                <input type="checkbox" id="reminder-checkbox" onchange="this.form.submit()" @(reminder.IsCompleted ? "checked" : "") />
+                                <label for="reminder-checkbox"></label>
+                            </form>
                             <a asp-action="Edit" asp-route-id="@reminder.Id" class="reminder-edit-btn">
                                 <i class="fa-solid fa-pencil"></i>
                             </a>

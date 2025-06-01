@@ -510,9 +510,15 @@ body {
         opacity: 0.6;
     }
 
+    .reminder-item.completed h3 {
+        text-decoration: line-through;
+    }
+
 .reminder-checkbox {
-    margin-right: 15px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
     .reminder-checkbox input {
@@ -635,6 +641,23 @@ body {
         font-weight: 600;
     }
 
+.event-edit-btn, .event-delete-btn, .event-edit-btn, .event-delete-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #8a94a6;
+}
+
+.event-delete-btn, .event-delete-btn {
+    color: #ff8a95;
+}
+
 .events-list {
     display: flex;
     flex-direction: column;
@@ -647,6 +670,47 @@ body {
     padding: 20px;
     background-color: #f9f9f9;
 }
+
+    .event-item.completed {
+        opacity: 0.6;
+    }
+
+    .event-item.completed h3 {
+        text-decoration: line-through;
+    }
+
+.event-checkbox {
+    margin-right: 15px;
+    position: relative;
+}
+
+    .event-checkbox input {
+        opacity: 0;
+        position: absolute;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        z-index: 1;
+    }
+
+    .event-checkbox label {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 2px solid #8a94a6;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .event-checkbox input:checked + label::after {
+        content: '✓';
+        position: absolute;
+        top: -4px;
+        left: 2px;
+        color: #5695cd;
+        font-size: 18px;
+    }
 
 .event-date {
     display: flex;

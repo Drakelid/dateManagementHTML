@@ -32,6 +32,21 @@
                 </div>
             </div>
 
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var modelState in ViewData.ModelState.Values)
+                        {
+                            foreach (var error in modelState.Errors)
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+
             <div class="form-group">
                 <label asp-for="Email" for="email">Email</label>
                 <div class="input-with-icon">

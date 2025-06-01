@@ -1,0 +1,18 @@
+﻿@model List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>
+
+<form asp-action="SaveCountry" method="post">
+    @Html.AntiForgeryToken()
+    <div class="settings-card content-card">
+        <h3>Preferred Country</h3>
+        <div class="form-group">
+            <label for="preferredCountryCode">Country</label>
+            <select name="preferredCountryCode" class="form-control">
+                @foreach (var item in Model)
+                {
+                    <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="save-btn">Save Country</button>
+    </div>
+</form>

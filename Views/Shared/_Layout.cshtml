@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var currentPath = Context.Request.Path.Value.ToLower();
+    var hideNavbar = currentPath.Contains("/account/login") || currentPath.Contains("/account/register");
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,61 +17,63 @@
 </head>
 <body>
     <header>
-        <nav class="sidebar">
-            <div class="nav-links-upper">
-                <div class="logo">
-                    <img src="~/images/logo.png" alt="App Logo" class="app-logo">
+        @if (!hideNavbar)
+        {
+            <nav class="sidebar">
+                <div class="nav-links-upper">
+                    <div class="logo">
+                        <img src="~/images/logo.png" alt="App Logo" class="app-logo">
+                    </div>
+
+                    <a asp-controller="Dashboard" asp-action="Index"
+                    class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a asp-controller="Calendar" asp-action="Index"
+                    class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Calendar" ? "active" : "")">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span>Calendar</span>
+                    </a>
+
+                    <a asp-controller="Reminders" asp-action="Index"
+                    class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Reminders" ? "active" : "")">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Reminders</span>
+                    </a>
+
+                    <a asp-controller="Events" asp-action="Index"
+                    class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Events" ? "active" : "")">
+                        <i class="fa-solid fa-flag"></i>
+                        <span>Events</span>
+                    </a>
+
+                    <a asp-controller="Settings" asp-action="Index"
+                    class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Settings" ? "active" : "")">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
                 </div>
 
-                <a asp-controller="Dashboard" asp-action="Index"
-                   class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Dashboard</span>
-                </a>
-
-                <a asp-controller="Calendar" asp-action="Index"
-                   class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Calendar" ? "active" : "")">
-                    <i class="fa-solid fa-calendar"></i>
-                    <span>Calendar</span>
-                </a>
-
-                <a asp-controller="Reminders" asp-action="Index"
-                   class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Reminders" ? "active" : "")">
-                    <i class="fa-solid fa-bell"></i>
-                    <span>Reminders</span>
-                </a>
-
-                <a asp-controller="Events" asp-action="Index"
-                   class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Events" ? "active" : "")">
-                    <i class="fa-solid fa-flag"></i>
-                    <span>Events</span>
-                </a>
-
-                <a asp-controller="Settings" asp-action="Index"
-                   class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Settings" ? "active" : "")">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Settings</span>
-                </a>
-            </div>
-
-            <div class="nav-links-bottom">
-                @if (User.IsInRole("Admin"))
-                {
-                    <a asp-controller="Admin" asp-action="Index"
-                       class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" ? "active" : "")">
+                <div class="nav-links-bottom">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Admin" asp-action="Index"
+                        class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" ? "active" : "")">
                         <i class="fa-solid fa-user-tie"></i>
                         <span>Admin Panel</span>
                     </a>
                 }
-                <form asp-controller="Account" asp-action="Logout" method="post" class="nav-item">
-                    <button type="submit" class="nav-item" style="all: unset; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span>Logout</span>
-                    </button>
-                </form>
-            </div>
-        </nav>
-
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="nav-item">
+                        <button type="submit" class="nav-item" style="all: unset; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
+                </div>
+            </nav>
+        }
     </header>
         <div class="container">
             <main role="main" class="pb-3">
