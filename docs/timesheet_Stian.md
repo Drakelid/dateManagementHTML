@@ -28,6 +28,8 @@ YYYY-MM-DD | 3 h | “Short task description” | 900,-
 
 2025-05-31 | 4h | “Made reminders page fully functional, previously lacked certain features. Made Dashboard functional. It now displays events and reminders for the day. The event progress while is functional and dynamic.” | 1200,-
 
-2025-05-32 | 6h | “Added navigation bar filter, to avoid displaying it during login and registration. Worked further on user settings page. Changed up how preferred country works, added country ISO codes in parentashes next to country name. Made profile information, password and delete account functional. Allows users to change profile data, change password and preferred country.” | 1800,-
+2025-05-32 | 4h | “Added navigation bar filter, to avoid displaying it during login and registration. Worked further on user settings page, set up various files needed for page functionality.” | 1200,-
+
+2025-06-01 | 6h | "Changed up how preferred country works, added country ISO codes in parentashes next to country name. Made profile information, password and delete account functional. Allows users to change profile data, change password and preferred country." | 1800,-
 
 ```
