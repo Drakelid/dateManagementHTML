@@ -49,9 +49,13 @@ A full-featured ASP.NET Core MVC web application for managing user events, remin
 
 ```bash
 git clone https://github.com/your-username/dateManagementHTML.git
+```
 
-´´´Package Manager Console
+Open NuGet Package Manager
+```bash
 Add-Migration InitialSetup
 Update-database
-
+```
 An Admin account for first time setup will be seeded and account details can be viewed inside appsettings.json
+
+!!! DO NOT FORGET TO CHANGE ADMIN PASSWORD AFTER SETUP !!!
