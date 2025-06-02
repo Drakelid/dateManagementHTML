@@ -65,6 +65,8 @@
                     </div>
                 </div>
 
+                <div id="workingDaysInfo" class="text-info mb-3"></div>
+
                 <div class="form-check mb-3">
                     <input asp-for="IsAllDay" class="form-check-input" />
                     <label asp-for="IsAllDay" class="form-check-label"></label>
@@ -88,4 +90,49 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const startInput = document.querySelector('[name="StartDateTime"]');
+        const endInput = document.querySelector('[name="EndDateTime"]');
+        const infoDiv = document.getElementById("workingDaysInfo");
+
+        function updateWorkingDays() {
+            const start = startInput.value.split("T")[0];
+            const end = endInput.value.split("T")[0];
+
+            if (!start || !end) {
+                infoDiv.textContent = '';
+                return;
+            }
+
+            fetch(`/Events/GetWorkingDays?start=${start}&end=${end}`)
+                .then(res => res.json())
+                .then(data => {
+                    let message = `You selected ${data.totalDays} day(s): ${data.workingDays} working day(s), excluding ${data.weekends} weekend day(s) and ${data.holidays} holiday(s).`;
+
+                    if (data.excludedHolidayList && data.excludedHolidayList.length > 0) {
+                        message += "<br><strong>Excluded Holidays:</strong><ul>";
+                        data.excludedHolidayList.forEach(h => {
+                            const holidayDate = new Date(h.date);
+                            const formatted = holidayDate.toLocaleDateString('en-US', {
+                                day: '2-digit',
+                                month: 'long',
+                                year: 'numeric'
+                            });
+                            message += `<li>${formatted}: ${h.name}</li>`;
+                        });
+                        message += "</ul>";
+                    }
+
+                    infoDiv.innerHTML = message;
+                })
+                .catch(err => {
+                    console.error("Error fetching working days:", err);
+                    infoDiv.textContent = '';
+                });
+        }
+
+        startInput.addEventListener('change', updateWorkingDays);
+        endInput.addEventListener('change', updateWorkingDays);
+    </script>
 }

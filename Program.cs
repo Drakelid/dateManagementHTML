@@ -25,7 +25,7 @@ public class Program
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DateManagement")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         builder.Services.AddSingleton<TimeProvider>(TimeProvider.System);
 
